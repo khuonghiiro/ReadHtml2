@@ -1,7 +1,9 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using ReadHtml.Constant;
 using ReadHtml.Model;
+using System.Text.RegularExpressions;
 
 namespace ReadHtml.Handle
 {
@@ -23,29 +25,36 @@ namespace ReadHtml.Handle
         {
             List<Root> lstData = new();
 
-            foreach (var tag in tagHtml)
+            try
             {
-                var queryTag = string.Format(Constants.LINK_TWO_TAG, query, tag);
-
-                var lstQuery = data?.QuerySelectorAll(queryTag);
-
-                if (lstQuery?.Length == 0)
+                foreach (var tag in tagHtml)
                 {
-                    continue;
+                    var queryTag = string.Format(Constants.LINK_TWO_TAG, query, tag);
+
+                    var lstQuery = data?.QuerySelectorAll(queryTag);
+
+                    if (lstQuery?.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    foreach (var list in lstQuery)
+                    {
+
+                        Root rt = new Root();
+
+                        rt = await GetRoot(index, tag, list);
+
+                        lstData.Add(rt);
+
+                        index++;
+                        count = index;
+                    }
                 }
+            }
+            catch(NullReferenceException)
+            {
 
-                foreach (var list in lstQuery)
-                {
-
-                    Root rt = new Root();
-
-                    rt = await GetRoot(index, tag, list);
-
-                    lstData.Add(rt);
-
-                    index++;
-                    count = index;
-                }
             }
 
             return await Task.FromResult(lstData);
@@ -62,7 +71,7 @@ namespace ReadHtml.Handle
             string query = string.Empty;
             string queryOriginalImg = "data-original";
 
-            if (type == Constants.WRAP_NOTE)
+            if (type == Constants.TYPE_WRAP_NOTE)
             {
                 string typeTag = string.Format(Constants.DIV_ATTR_TYPE_PARAM, type);
 
@@ -223,24 +232,35 @@ namespace ReadHtml.Handle
 
             Root root = new Root();
 
+            //var rx = new Regex(Constants.PATTERN_REGEX, RegexOptions.Compiled);
+
+
+            //var match = rx.Match(data.InnerHtml);
+
+            //if (match.Success)
+            //{
+            //    
+
+            //}
+
             root.Type = type;
             root.Caption = data?.QuerySelector(queryCap)?.TextContent;
-            root.FileName = data?.GetAttribute(Constants.TAG_ATTR_FILENAME);
+            root.FileName = data?.GetAttribute(Constants.TAG_ATTR_FILE_NAME);
             root.Avatar = data?.GetAttribute(Constants.TAG_ATTR_AVATAR);
             root.Quote = data?.QuerySelector(queryQuote)?.TextContent;
-            root.StarNameCaption = data?.QuerySelector(Constants.TAG_ATTR_STARTNAME)?.TextContent;
+            root.StarNameCaption = data?.QuerySelector(Constants.TAG_ATTR_START_NAME)?.TextContent;
             root.Size = await GetSize(type, data);
 
             root.ListRowImage = await ListRowImage(type, data);
 
             int i = 1;
 
-            if (type == Constants.WRAP_NOTE)
+            if (type == Constants.TYPE_WRAP_NOTE)
             {
                 root.ListValue = await GetListRoot(i, data, queryType);
             }
 
-            if (type == Constants.PHOTO)
+            if (type == Constants.TYPE_PHOTO)
             {
                 //index++;
                 root.Image = await GetImage(type, data);

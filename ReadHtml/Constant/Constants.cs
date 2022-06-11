@@ -28,11 +28,11 @@ namespace ReadHtml.Constant
 
         public const string TAG_DIV_P_QUOTE = "div > p.quote";
 
-        public const string TAG_ATTR_FILENAME = "data-vid";
+        public const string TAG_ATTR_FILE_NAME = "data-vid";
 
         public const string TAG_ATTR_AVATAR = "data-thumb";
 
-        public const string TAG_ATTR_STARTNAME = "p.StarNameCaption";
+        public const string TAG_ATTR_START_NAME = "p.StarNameCaption";
 
         public const string START_NAME_CAPTION = "StarNameCaption";
 
@@ -42,17 +42,33 @@ namespace ReadHtml.Constant
 
         public const string TAG_DIV_CAP = "div.{0}";
 
-        public const string PATTERN_REGEX = "\"\\w+Caption";
+        public const string PATTERN_REGEX = "(\")" + @"(\w)"+ "+Caption";
 
         public const string CAPTION = "Caption";
 
-        public const string WRAP_NOTE = "wrapnote";
 
         public const string LAYOUT_ALBUM= "LayoutAlbum";
 
-        public const string PHOTO = "Photo";
+        public const string TYPE_WRAP_NOTE = "wrapnote";
+
+        public const string TYPE_PHOTO = "Photo";
+
+        public const string TYPE_VIDEO_STREAM = "VideoStream";
+
+        public const string TYPE_LAYOUT_ALBUM = "LayoutAlbum";
 
         public const int INDEX = 1;
+
+        public const string DATA_HEIGHT = "data-height";
+
+        public const string DATA_WIDTH = "data-width";
+
+        public const string HEIGHT = "h";
+
+        public const string WIDTH = "w";
+
+
+
 
     }
 }
