@@ -30,7 +30,7 @@ namespace ReadHtml.Handles
                 int width = 0;
                 int height = 0;
 
-                if (type == "VideoStream")
+                if (type == Constants.TYPE_VIDEO_STREAM)
                 {
                     height = Convert.ToInt32(data.GetAttribute(Constants.DATA_HEIGHT)?.Replace("px", ""));
 
@@ -38,7 +38,7 @@ namespace ReadHtml.Handles
 
                 }
 
-                if (type == "LayoutAlbum" || type == "wrapnote" || type == "Photo")
+                if (type == Constants.TYPE_LAYOUT_ALBUM || type == Constants.TYPE_WRAP_NOTE || type == Constants.TYPE_PHOTO)
                 {
                     height = Convert.ToInt32(data.GetAttribute(Constants.HEIGHT));
 

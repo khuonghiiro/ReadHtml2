@@ -6,7 +6,7 @@ using ReadHtml.Constant;
 using ReadHtml.Handles;
 using System.Text.RegularExpressions;
 
-string path = @"D:\sample.html";
+string path = @"D:\sample.txt";
 
 var handleHtml = new HandleHtml();
 
