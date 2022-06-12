@@ -16,7 +16,11 @@ namespace ReadHtml.Constant
 
         public const string DIV_ATTR_TYPE = "div.VCSortableInPreviewMode*[type]";
 
-        public const string LINK_TWO_TAG = "{0} > {1}";
+        public const string TAG_DIV = "div";
+
+        public const string CONCAT_TWO_TAG = "{0} > {1}";
+
+        public const string DOT_TWO_TAG = "{0}.{1}";
 
         //public const string TAG_DIV_PHOTO = "div*[type='Photo'] >> img";
 
@@ -27,6 +31,8 @@ namespace ReadHtml.Constant
         public const string TAG_DIV_P = "div > p";
 
         public const string TAG_DIV_P_QUOTE = "div > p.quote";
+
+        public const string TAG_P_QUOTE = "p.quote";
 
         public const string TAG_ATTR_FILE_NAME = "data-vid";
 
@@ -42,12 +48,9 @@ namespace ReadHtml.Constant
 
         public const string TAG_DIV_CAP = "div.{0}";
 
-        public const string PATTERN_REGEX = "(\")" + @"(\w)"+ "+Caption";
+        public const string PATTERN_REGEX =  @"(\w)+Caption";
 
         public const string CAPTION = "Caption";
-
-
-        public const string LAYOUT_ALBUM= "LayoutAlbum";
 
         public const string TYPE_WRAP_NOTE = "wrapnote";
 
@@ -57,7 +60,7 @@ namespace ReadHtml.Constant
 
         public const string TYPE_LAYOUT_ALBUM = "LayoutAlbum";
 
-        public const int INDEX = 1;
+        public const int NUMBER_ONE = 1;
 
         public const string DATA_HEIGHT = "data-height";
 
@@ -67,8 +70,19 @@ namespace ReadHtml.Constant
 
         public const string WIDTH = "w";
 
+        public const string DATA_ORIGINAL = "data-original";
 
+        public const string URL = "url";
 
+        public const string SRC = "src";
+
+        public const string DIV_CHILD_LAYOUT_ALBUM = "div.LayoutAlbumContent > div.LayoutAlbumRow";
+
+        public const string FIGURE = "figure";
+
+        public const string TYPE = "type";
+
+        public const string HTML_DIV_ELEMENT= "HtmlDivElement";
 
     }
 }

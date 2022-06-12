@@ -1,6 +1,7 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
 using ReadHtml.Constant;
+using System.Text.RegularExpressions;
 
 namespace ReadHtml.Common
 {
@@ -8,10 +9,19 @@ namespace ReadHtml.Common
     {
         public static async Task<IDocument> ReadPathHtml(string path)
         {
+            var html = string.Empty;
             var config = Configuration.Default.WithDefaultLoader();
             var context = BrowsingContext.New(config);
 
-            var html = File.ReadAllText(path);
+            try
+            {
+                html = File.ReadAllText(path);
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Error read file");
+            }
+            
 
             return await context.OpenAsync(req => req.Content(html));
         }
@@ -24,7 +34,7 @@ namespace ReadHtml.Common
             return await context.OpenAsync(req => req.Content(html));
         }
 
-        public static IHtmlCollection<IElement> GetAllData(IDocument doc, string query)
+        public static IHtmlCollection<IElement> GetAllTagHtml(IDocument doc, string query)
         {
             var data = doc.QuerySelectorAll(query);
 
