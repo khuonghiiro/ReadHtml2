@@ -10,19 +10,13 @@ namespace ReadHtml.Constant
     {
         public const string DIV_CLASS_PARENT = "div.clearfix";
 
-        public const string DIV_CLASS_CHILD = "div.VCSortableInPreviewMode";
-
         public const string DIV_ATTR_TYPE_PARAM = "div.VCSortableInPreviewMode*[type = '{0}']";
-
-        public const string DIV_ATTR_TYPE = "div.VCSortableInPreviewMode*[type]";
 
         public const string TAG_DIV = "div";
 
-        public const string CONCAT_TWO_TAG = "{0} > {1}";
+        public const string CONCAT_TWO_TAG_PARAM = "{0} > {1}";
 
-        public const string DOT_TWO_TAG = "{0}.{1}";
-
-        //public const string TAG_DIV_PHOTO = "div*[type='Photo'] >> img";
+        public const string DOT_TWO_TAG_PARAM = "{0}.{1}";
 
         public const string TAG_DIV_IMG = "div >> img";
 
@@ -30,23 +24,19 @@ namespace ReadHtml.Constant
 
         public const string TAG_DIV_P = "div > p";
 
-        public const string TAG_DIV_P_QUOTE = "div > p.quote";
-
         public const string TAG_P_QUOTE = "p.quote";
 
         public const string TAG_ATTR_FILE_NAME = "data-vid";
 
         public const string TAG_ATTR_AVATAR = "data-thumb";
 
-        public const string TAG_ATTR_START_NAME = "p.StarNameCaption";
-
         public const string START_NAME_CAPTION = "StarNameCaption";
 
         public const string TAG_P = "p";
 
-        public const string TAG_P_CAP = "p.{0}";
+        public const string TAG_P_CAP_PARAM = "p.{0}";
 
-        public const string TAG_DIV_CAP = "div.{0}";
+        public const string TAG_DIV_CAP_PARAM = "div.{0}";
 
         public const string PATTERN_REGEX =  @"(\w)+Caption";
 
@@ -84,5 +74,8 @@ namespace ReadHtml.Constant
 
         public const string HTML_DIV_ELEMENT= "HtmlDivElement";
 
+        public const string TAG_DIV_ELEMENT = "div";
+
+        public const string FILE_EXTENSION_TXT = ".txt";
     }
 }

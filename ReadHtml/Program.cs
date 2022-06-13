@@ -1,24 +1,19 @@
-﻿using AngleSharp.Dom;
-using AngleSharp.Html.Dom;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using ReadHtml.Common;
 using ReadHtml.Constant;
 using ReadHtml.Handles;
-using System.Text.RegularExpressions;
 
-string path = @"D:\sample.txt";
+string path = @"F:\sample.txt";
 
 var handleHtml = new HandleHtml();
 
-var doc = await AngleSharpUtils.ReadPathHtml(path);
+var doc = await AngleSharpUtils.GetDocument(path);
 
-string? query = Constants.DIV_CLASS_PARENT;
+var data = AngleSharpUtils.GetDataFromDoc(doc, Constants.DIV_CLASS_PARENT);
 
-var data = AngleSharpUtils.GetAllTagHtml(doc, query);
+var listRoot = await handleHtml.GetListRoot(data[0]);
 
-var lst = await handleHtml.GetListRoot(data[0]);
-
-string json = JsonConvert.SerializeObject(lst, new JsonSerializerSettings()
+string json = JsonConvert.SerializeObject(listRoot, new JsonSerializerSettings()
 {
     NullValueHandling = NullValueHandling.Ignore,
     Formatting = Formatting.Indented,

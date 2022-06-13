@@ -1,14 +1,7 @@
 ﻿using AngleSharp.Dom;
-using Newtonsoft.Json;
-using ReadHtml.Common;
 using ReadHtml.Constant;
 using ReadHtml.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ReadHtml.Handles
 {
@@ -16,11 +9,11 @@ namespace ReadHtml.Handles
     {
 
         /// <summary>
-        /// Get object size of width and height in tag img
+        /// Get object Size of width and height in tag img
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="type">Attribute type</param>
+        /// <param name="data">Element data</param>
+        /// <returns>Object Size</returns>
         private async Task<Size?> GetSize(string? type, IElement data)
         {
             Size size = new ();
@@ -35,10 +28,11 @@ namespace ReadHtml.Handles
                     height = Convert.ToInt32(data.GetAttribute(Constants.DATA_HEIGHT)?.Replace("px", ""));
 
                     width = Convert.ToInt32(data.GetAttribute(Constants.DATA_WIDTH)?.Replace("px", ""));
-
                 }
 
-                if (type == Constants.TYPE_LAYOUT_ALBUM || type == Constants.TYPE_WRAP_NOTE || type == Constants.TYPE_PHOTO)
+                if (type == Constants.TYPE_LAYOUT_ALBUM || 
+                    type == Constants.TYPE_WRAP_NOTE || 
+                    type == Constants.TYPE_PHOTO)
                 {
                     height = Convert.ToInt32(data.GetAttribute(Constants.HEIGHT));
 
@@ -56,8 +50,6 @@ namespace ReadHtml.Handles
             }
             catch(NullReferenceException)
             {
-                Console.WriteLine("error size");
-
                 return null;
             }
 
@@ -65,11 +57,11 @@ namespace ReadHtml.Handles
         }
 
         /// <summary>
-        /// Get object image in tag img
+        /// Get object Image in tag img
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="type">Attribute type</param>
+        /// <param name="data">Element data</param>
+        /// <returns>Object Image</returns>
         private async Task<Image?> GetImage(string? type, IElement data)
         {
             Image img = new();
@@ -84,7 +76,7 @@ namespace ReadHtml.Handles
                 {
                     string typeTag = string.Format(Constants.DIV_ATTR_TYPE_PARAM, type);
 
-                    querySelector = string.Format(Constants.CONCAT_TWO_TAG, typeTag, Constants.TAG_DIV_IMG);
+                    querySelector = string.Format(Constants.CONCAT_TWO_TAG_PARAM, typeTag, Constants.TAG_DIV_IMG);
                 }
                 else if (type == Constants.TYPE_LAYOUT_ALBUM)
                 {
@@ -112,16 +104,18 @@ namespace ReadHtml.Handles
             }
             catch(NullReferenceException)
             {
-                Console.WriteLine("error image");
-
                 return null;
-
             }
 
             return await Task.FromResult(img);
         }
 
-
+        /// <summary>
+        /// List row image
+        /// </summary>
+        /// <param name="type">Attribute type</param>
+        /// <param name="data">Element data</param>
+        /// <returns>List object RowImage</returns>
         private async Task<List<RowImage>?> ListRowImage(string? type, IElement data)
         {
             List<RowImage> listRowImage = new ();
@@ -169,19 +163,25 @@ namespace ReadHtml.Handles
             }
             catch (NullReferenceException)
             {
-                Console.WriteLine("error list row");
                 return null;
             }
             
             return await Task.FromResult(listRowImage);
         }
 
+        /// <summary>
+        /// Get object Root
+        /// </summary>
+        /// <param name="type">Attribute type</param>
+        /// <param name="data">Element data</param>
+        /// <returns>Object Root</returns>
         private async Task<Root> GetRoot(int index, IElement data)
         {
             Root root = new();
 
             try
             {
+                // 
                 if (data.GetType().Name == Constants.HTML_DIV_ELEMENT)
                 {
                     var type = data.GetAttribute(Constants.TYPE);
@@ -220,15 +220,21 @@ namespace ReadHtml.Handles
             }
             catch (Exception)
             {
-                Console.WriteLine("Error root");
+                Console.WriteLine("Error get object Root");
             }
 
             return root;
         }
 
+        /// <summary>
+        /// Get list object Root
+        /// </summary>
+        /// <param name="data">Element data</param>
+        /// <returns>List object Root</returns>
         public async Task<List<Root>?> GetListRoot(IElement data)
         {
             List<Root> listRoot = new();
+
             int count = Constants.NUMBER_ONE;
 
             try
@@ -241,12 +247,21 @@ namespace ReadHtml.Handles
             }
             catch (NullReferenceException)
             {
-                return null;
+                Console.WriteLine("Error get list root");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             return await Task.FromResult(listRoot);
         }
 
+        /// <summary>
+        /// Get value match with regex
+        /// </summary>
+        /// <param name="data">Element data</param>
+        /// <returns>String text match with regex</returns>
         private string? ValueRegex(IElement data)
         {
             var rx = new Regex(Constants.PATTERN_REGEX, RegexOptions.Compiled);
@@ -261,22 +276,30 @@ namespace ReadHtml.Handles
             return null;
         }
 
-        private string? ValueCaption(int number, string? value, IElement data)
+        /// <summary>
+        /// Get value Caption or StarNameCaption
+        /// </summary>
+        /// <param name="number">Choose number = 1 return value Caption or number = 2 return value StarNameCaption</param>
+        /// <param name="valueRegex">Value regex</param>
+        /// <param name="data">Element data</param>
+        /// <returns>String text of Caption or StarNameCaption</returns>
+        private string? ValueCaption(int number, string? valueRegex, IElement data)
         {
-            if(data != null && value != null)
+            if(data != null && valueRegex != null)
             {
                 switch(number)
                 {
+                    // Get caption
                     case 1:
-                        if (value.Contains(Constants.CAPTION) && value != Constants.START_NAME_CAPTION)
+                        if (valueRegex.Contains(Constants.CAPTION) && valueRegex != Constants.START_NAME_CAPTION)
                         {
-                            string? selector = string.Format(Constants.DOT_TWO_TAG, Constants.TAG_DIV, value);
+                            string? selector = string.Format(Constants.TAG_DIV_CAP_PARAM, valueRegex);
 
                             var text = data?.QuerySelector(selector)?.TextContent;
 
                             if (string.IsNullOrEmpty(text))
                             {
-                                selector = string.Format(Constants.DOT_TWO_TAG, Constants.TAG_P, value);
+                                selector = string.Format(Constants.TAG_P_CAP_PARAM, valueRegex);
 
                                 return data?.QuerySelector(selector)?.TextContent;
                             }
@@ -285,14 +308,17 @@ namespace ReadHtml.Handles
                         }
                         break;
 
+                    //Get StarNameCaption
                     case 2:
-                        if (value.Contains(Constants.CAPTION) && value == Constants.START_NAME_CAPTION)
+                        if (valueRegex.Contains(Constants.CAPTION) && valueRegex == Constants.START_NAME_CAPTION)
                         {
-                            string? selector = string.Format(Constants.DOT_TWO_TAG, Constants.TAG_P, value);
+                            string? selector = string.Format(Constants.TAG_P_CAP_PARAM, valueRegex);
 
                             return data?.QuerySelector(selector)?.TextContent;
                         }
                         break;
+
+                    default: return null;
                 }
             }
             return null;
