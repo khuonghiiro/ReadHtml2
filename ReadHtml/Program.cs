@@ -3,7 +3,7 @@ using ReadHtml.Common;
 using ReadHtml.Constant;
 using ReadHtml.Handles;
 
-string path = @"F:\sample.txt";
+string path = @"D:\sample.txt";
 
 var handleHtml = new HandleHtml();
 
@@ -19,4 +19,5 @@ string json = JsonConvert.SerializeObject(listRoot, new JsonSerializerSettings()
     Formatting = Formatting.Indented,
     DefaultValueHandling = DefaultValueHandling.Ignore
 });
+Console.OutputEncoding = System.Text.Encoding.Default;
 Console.WriteLine(json);
