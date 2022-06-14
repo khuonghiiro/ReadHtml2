@@ -21,9 +21,8 @@ namespace ReadHtml.Common
             try
             {
                 html = ReadFilePath(path);
-
             }
-            catch(System.IO.IOException io)
+            catch (System.IO.IOException io)
             {
                 Console.WriteLine(io.Message);
                 System.Environment.Exit(0);
@@ -46,21 +45,23 @@ namespace ReadHtml.Common
         public static IHtmlCollection<IElement> GetDataFromDoc(IDocument doc, string query)
         {
 
-            var data = doc.QuerySelectorAll(query);
+            IHtmlCollection<IElement>? data = null!;
 
             try
             {
-                if (data.Length == 0)
-                {
-                    throw new System.ArgumentOutOfRangeException(nameof(doc), data.Length, "There is no data or the query is incorrect");
-                }
+                data = DataFromDocQuery(doc, query);
             }
             catch (System.ArgumentOutOfRangeException ae)
             {
                 Console.WriteLine(ae.Message);
                 System.Environment.Exit(0);
             }
-            
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                System.Environment.Exit(0);
+            }
+
             return data;
         }
 
@@ -84,12 +85,53 @@ namespace ReadHtml.Common
 
             string text = File.ReadAllText(path);
 
-            if(text == string.Empty)
+            if (text == string.Empty)
             {
                 throw new System.IO.IOException("No data in file");
             }
 
+            if (!IsTextHtml(text))
+            {
+                throw new Exception("Not text html");
+            }
+
             return text;
+        }
+
+        /// <summary>
+        /// Check text html
+        /// </summary>
+        /// <param name="text">Text</param>
+        /// <returns>True or false</returns>
+        private static bool IsTextHtml(string text)
+        {
+            Regex tagRegex = new Regex(@"<\s*([^ >]+)[^>]*>.*?<\s*/\s*\1\s*>");
+
+            if (tagRegex.IsMatch(text))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Get data from document and query
+        /// </summary>
+        /// <param name="doc">Document</param>
+        /// <param name="query">Query</param>
+        /// <returns>Data collection element</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
+        public static IHtmlCollection<IElement> DataFromDocQuery(IDocument doc, string query)
+        {
+            var data = doc.QuerySelectorAll(query);
+
+            if (data.Length == 0)
+            {
+                throw new System.ArgumentOutOfRangeException(nameof(doc), data.Length, "There is no data or the query is incorrect");
+            }
+
+            return data;
         }
 
     }

@@ -16,7 +16,7 @@ namespace ReadHtml.Handles
         /// <returns>Object Size</returns>
         private async Task<Size?> GetSize(string? type, IElement data)
         {
-            Size size = new ();
+            Size size = new();
 
             try
             {
@@ -30,8 +30,8 @@ namespace ReadHtml.Handles
                     width = Convert.ToInt32(data.GetAttribute(Constants.DATA_WIDTH)?.Replace("px", ""));
                 }
 
-                if (type == Constants.TYPE_LAYOUT_ALBUM || 
-                    type == Constants.TYPE_WRAP_NOTE || 
+                if (type == Constants.TYPE_LAYOUT_ALBUM ||
+                    type == Constants.TYPE_WRAP_NOTE ||
                     type == Constants.TYPE_PHOTO)
                 {
                     height = Convert.ToInt32(data.GetAttribute(Constants.HEIGHT));
@@ -48,7 +48,7 @@ namespace ReadHtml.Handles
                 size.Width = width;
 
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return null;
             }
@@ -102,7 +102,7 @@ namespace ReadHtml.Handles
                 img.OriginalImg = dataImg.GetAttribute(queryOriginalImg);
 
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return null;
             }
@@ -118,7 +118,7 @@ namespace ReadHtml.Handles
         /// <returns>List object RowImage</returns>
         private async Task<List<RowImage>?> ListRowImage(string? type, IElement data)
         {
-            List<RowImage> listRowImage = new ();
+            List<RowImage> listRowImage = new();
 
             try
             {
@@ -143,11 +143,11 @@ namespace ReadHtml.Handles
 
                     foreach (var item in lstItem)
                     {
-                        Image? img = new ();
+                        Image? img = new();
 
                         img = await GetImage(type, item);
 
-                        if(img != null)
+                        if (img != null)
                         {
                             lstImg.Add(img);
                         }
@@ -165,7 +165,7 @@ namespace ReadHtml.Handles
             {
                 return null;
             }
-            
+
             return await Task.FromResult(listRowImage);
         }
 
@@ -175,13 +175,13 @@ namespace ReadHtml.Handles
         /// <param name="type">Attribute type</param>
         /// <param name="data">Element data</param>
         /// <returns>Object Root</returns>
-        private async Task<Root> GetRoot(int index, IElement data)
+        public async Task<Root> GetRoot(int index, IElement data)
         {
             Root root = new();
 
             try
             {
-                // 
+
                 if (data.GetType().Name == Constants.HTML_DIV_ELEMENT)
                 {
                     var type = data.GetAttribute(Constants.TYPE);
@@ -211,7 +211,7 @@ namespace ReadHtml.Handles
                 }
                 else
                 {
-                    root.Type = data.NodeName;
+                    root.Type = data.LocalName;
                     root.Index = index;
                     root.Value = data.InnerHtml;
                 }
@@ -249,7 +249,11 @@ namespace ReadHtml.Handles
             {
                 Console.WriteLine("Error get list root");
             }
-            catch(Exception ex)
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -268,7 +272,7 @@ namespace ReadHtml.Handles
 
             var match = rx.Match(data.OuterHtml);
 
-            if(match.Success)
+            if (match.Success)
             {
                 return match.Value;
             }
@@ -285,9 +289,9 @@ namespace ReadHtml.Handles
         /// <returns>String text of Caption or StarNameCaption</returns>
         private string? ValueCaption(int number, string? valueRegex, IElement data)
         {
-            if(data != null && valueRegex != null)
+            if (data != null && valueRegex != null)
             {
-                switch(number)
+                switch (number)
                 {
                     // Get caption
                     case 1:

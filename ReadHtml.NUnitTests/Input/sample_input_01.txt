@@ -1,0 +1,6 @@
+<div class="clearfix news-content">
+        <h2 style="text-align: center;" data-length="26">CHẲNG NGẠI GÌ U23 HÀN QUỐC</h2>
+		<p><i>"Trước tình huống gỡ hòa, tôi đã có niềm tin vào việc <a href="https://soha.vn/u23-viet-nam.html" title="U23 Việt Nam" target="_blank">U23 Việt Nam</a> sẽ ghi được bàn thắng. Lúc đó đội mình đang đá tốt, các em thi đấu thanh thoát, linh hoạt, cộng thêm việc <a href="https://soha.vn/u23-han-quoc.html" title="U23 Hàn Quốc" target="_blank">U23 Hàn Quốc</a> bị thẻ đỏ nên mình càng có niềm tin hơn",</i> cựu tuyển thủ <a href="https://soha.vn/huynh-quang-thanh.html" title="Huỳnh Quang Thanh" target="_blank">Huỳnh Quang Thanh</a> bày tỏ với chúng tôi sau trận hòa 1-1 của U23 Việt Nam.</p>
+		<p>Trên sân Lokomotiv tối qua (5/6), U23 Hàn Quốc là đội có được bàn mở tỉ số do công của Cho Young-wook ở phút 63. Tuy nhiên, sự vùng lên mạnh mẽ của U23 Việt Nam đã khiến đội bóng Xứ kim chi phải trải qua những phút cuối đầy vất vả.</p>
+		<p>Phút 78, Lee Jin-yong nhận thẻ đỏ rời sân. 5 phút sau, Vũ Tiến Long có pha dứt điểm đầy uy lực ở trong vòng 16m50, gỡ hòa 1-1 cho U23 Việt Nam. Thậm chí nếu dứt điểm chính xác hơn ở thời gian đá bù giờ, Văn Tùng đã có thể giúp đội nhà giành được 3 điểm.</p>
+</div>

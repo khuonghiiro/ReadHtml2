@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReadHtml.Constant
+﻿namespace ReadHtml.Constant
 {
     public static class Constants
     {
@@ -38,7 +32,7 @@ namespace ReadHtml.Constant
 
         public const string TAG_DIV_CAP_PARAM = "div.{0}";
 
-        public const string PATTERN_REGEX =  @"(\w)+Caption";
+        public const string PATTERN_REGEX = @"(\w)+Caption";
 
         public const string CAPTION = "Caption";
 
@@ -72,7 +66,7 @@ namespace ReadHtml.Constant
 
         public const string TYPE = "type";
 
-        public const string HTML_DIV_ELEMENT= "HtmlDivElement";
+        public const string HTML_DIV_ELEMENT = "HtmlDivElement";
 
         public const string TAG_DIV_ELEMENT = "div";
 

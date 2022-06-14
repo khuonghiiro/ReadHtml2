@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReadHtml.Models
+﻿namespace ReadHtml.Models
 {
     public class Root
     {
@@ -31,6 +25,32 @@ namespace ReadHtml.Models
         public string? StarNameCaption { get; set; }
 
         public string? Caption { get; set; }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj is Root)
+            {
+                var that = obj as Root;
+                return this.Index == that?.Index && 
+                    this.Type == that?.Type && 
+                    this.Value == that?.Value;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        //public override int GetHashCode()
+        //{
+        //    var hashcode = Index.GetHashCode();
+        //    hashCode = Type.GetHashCode();
+        //    hashCode = Value.GetHashCode();
+        //    return hashCode;
+        //}
 
     }
 }
