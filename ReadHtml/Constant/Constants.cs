@@ -14,7 +14,7 @@ namespace ReadHtml.Constant
 
         public const string TAG_DIV = "div";
 
-        public const string CONCAT_TWO_TAG_PARAM = "{0} > {1}";
+        public const string CONTACT_TWO_TAG_PARAM = "{0} > {1}";
 
         public const string DOT_TWO_TAG_PARAM = "{0}.{1}";
 
@@ -56,11 +56,11 @@ namespace ReadHtml.Constant
 
         public const string DATA_WIDTH = "data-width";
 
+        public const string DATA_ORIGINAL = "data-original";
+
         public const string HEIGHT = "h";
 
         public const string WIDTH = "w";
-
-        public const string DATA_ORIGINAL = "data-original";
 
         public const string URL = "url";
 
@@ -73,8 +73,6 @@ namespace ReadHtml.Constant
         public const string TYPE = "type";
 
         public const string HTML_DIV_ELEMENT= "HtmlDivElement";
-
-        public const string TAG_DIV_ELEMENT = "div";
 
         public const string FILE_EXTENSION_TXT = ".txt";
     }

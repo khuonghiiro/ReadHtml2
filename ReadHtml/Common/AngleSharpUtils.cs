@@ -21,7 +21,6 @@ namespace ReadHtml.Common
             try
             {
                 html = ReadFilePath(path);
-
             }
             catch(System.IO.IOException io)
             {
