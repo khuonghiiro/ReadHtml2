@@ -76,7 +76,7 @@ namespace ReadHtml.Handles
                 {
                     string typeTag = string.Format(Constants.DIV_ATTR_TYPE_PARAM, type);
 
-                    querySelector = string.Format(Constants.CONCAT_TWO_TAG_PARAM, typeTag, Constants.TAG_DIV_IMG);
+                    querySelector = string.Format(Constants.CONTACT_TWO_TAG_PARAM, typeTag, Constants.TAG_DIV_IMG);
                 }
                 else if (type == Constants.TYPE_LAYOUT_ALBUM)
                 {
