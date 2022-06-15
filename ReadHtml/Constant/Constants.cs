@@ -74,6 +74,10 @@ namespace ReadHtml.Constant
 
         public const string HTML_DIV_ELEMENT= "HtmlDivElement";
 
+        public const string HTML_HEADING_ELEMENT = "HtmlHeadingElement";
+
+        public const string HTML_PARAGRAPH_ELEMENT = "HtmlParagraphElement";
+
         public const string TAG_DIV_ELEMENT = "div";
 
         public const string FILE_EXTENSION_TXT = ".txt";
