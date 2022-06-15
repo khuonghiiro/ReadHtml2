@@ -5,14 +5,11 @@ namespace ReadHtml.NUnitTests
 {
     public class AngleSharpUtilsTests
     {
-        private HandleHtml _handleHtml { get; set; } = null!;
-
         private readonly string startupPath = Path.Join(Environment.CurrentDirectory, (@"..\..\..\"));
 
         [SetUp]
         public void Setup()
         {
-            _handleHtml = new HandleHtml();
         }
 
         [Test]

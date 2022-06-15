@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using ReadHtml.Common;
-using ReadHtml.Constant;
+﻿using ReadHtml.Common;
 using ReadHtml.Handles;
 using ReadHtml.Models;
 
@@ -8,39 +6,14 @@ namespace ReadHtml.NUnitTests
 {
     public class HandleHtmlTests
     {
-        private HandleHtml _handleHtml { get; set; } = null!;
+        private HandleHtml HandleHtml { get; set; } = null!;
 
-        private readonly string startupPath =Path.Join(Environment.CurrentDirectory,(@"..\..\..\"));
+        private readonly string startupPath = Path.Join(Environment.CurrentDirectory, (@"..\..\..\"));
 
         [SetUp]
         public void Setup()
         {
-            _handleHtml = new HandleHtml();       
-        }
-
-        [Test]
-        public void TestListRootNormal()
-        {
-            string? pathAct = Path.Join(startupPath, "Input", "sample_input_01.txt");
-
-            string pathExp = Path.Join(startupPath, "Output", "sample_output_01.txt");
-
-            string expected = File.ReadAllText(pathExp);
-
-            var doc = AngleSharpUtils.GetDocument(pathAct);
-
-            var data = AngleSharpUtils.GetDataFromDoc(doc.Result, Constants.DIV_CLASS_PARENT);
-
-            var listRoot = _handleHtml.GetListRoot(data[0]);
-
-            string actual = JsonConvert.SerializeObject(listRoot, new JsonSerializerSettings()
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented,
-                DefaultValueHandling = DefaultValueHandling.Ignore
-            });
-
-            StringAssert.Contains(expected, actual);
+            HandleHtml = new HandleHtml();
         }
 
         [Test]
@@ -59,9 +32,9 @@ namespace ReadHtml.NUnitTests
 
             var data = AngleSharpUtils.GetDataFromDoc(doc.Result, "h2");
 
-            var actual = _handleHtml.GetRoot(1, data[0]);
+            var actual = HandleHtml.GetRoot(1, data[0]);
 
-            Assert.IsTrue(actual.Equals(expected));
+            Assert.That(actual.Result, Is.EqualTo(expected));
         }
     }
 }
