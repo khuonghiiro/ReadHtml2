@@ -181,39 +181,30 @@ namespace ReadHtml.Handles
 
             try
             {
+                var type = data.GetAttribute(Constants.TYPE);
 
-                if (data.GetType().Name == Constants.HTML_DIV_ELEMENT)
+                string? valueRegex = ValueRegex(data);
+
+                root.Type = type;
+                root.Index = index;
+                root.Value = null;
+                root.FileName = data.GetAttribute(Constants.TAG_ATTR_FILE_NAME);
+                root.Avatar = data.GetAttribute(Constants.TAG_ATTR_AVATAR);
+                root.Quote = data.QuerySelector(Constants.TAG_P_QUOTE)?.TextContent;
+                root.Size = await GetSize(type, data);
+                root.ListRowImage = await ListRowImage(type, data);
+                root.Caption = ValueCaption(1, valueRegex, data);
+                root.StarNameCaption = ValueCaption(2, valueRegex, data);
+
+                if (type == Constants.TYPE_WRAP_NOTE)
                 {
-                    var type = data.GetAttribute(Constants.TYPE);
-                    string? valueCap = ValueRegex(data);
-
-                    root.Type = type;
-                    root.Index = index;
-                    root.Value = null;
-                    root.FileName = data.GetAttribute(Constants.TAG_ATTR_FILE_NAME);
-                    root.Avatar = data.GetAttribute(Constants.TAG_ATTR_AVATAR);
-                    root.Quote = data.QuerySelector(Constants.TAG_P_QUOTE)?.TextContent;
-                    root.Size = await GetSize(type, data);
-                    root.ListRowImage = await ListRowImage(type, data);
-                    root.Caption = ValueCaption(1, valueCap, data);
-                    root.StarNameCaption = ValueCaption(2, valueCap, data);
-
-                    if (type == Constants.TYPE_WRAP_NOTE)
-                    {
-                        root.ListValue = await GetListRoot(data);
-                        root.Caption = null;
-                    }
-
-                    if (type == Constants.TYPE_PHOTO)
-                    {
-                        root.Image = await GetImage(type, data);
-                    }
+                    root.ListValue = await GetListRoot(data);
+                    root.Caption = null;
                 }
-                else
+
+                if (type == Constants.TYPE_PHOTO)
                 {
-                    root.Type = data.LocalName;
-                    root.Index = index;
-                    root.Value = data.InnerHtml;
+                    root.Image = await GetImage(type, data);
                 }
 
                 index++;
@@ -241,8 +232,28 @@ namespace ReadHtml.Handles
             {
                 foreach (var items in data.Children)
                 {
-                    listRoot.Add(await GetRoot(count, items));
-                    count++;
+                    if (items.GetType().Name == Constants.HTML_DIV_ELEMENT && 
+                        items.GetAttribute(Constants.TYPE) != null)
+                    {
+                        listRoot.Add(await GetRoot(count, items));
+                        count++;
+                    }
+                    else if(items.GetType().Name == Constants.HTML_DIV_ELEMENT && 
+                        items.GetAttribute(Constants.TYPE) == null &&
+                        items.ClassList.Length == 0)
+                    {
+                        foreach (var item in items.Children)
+                        {
+                            listRoot.Add(GetHtmlHeadingOrParagraph(count, item));
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        listRoot.Add(GetHtmlHeadingOrParagraph(count, items));
+                        count++;
+                    }
+
                 }
             }
             catch (NullReferenceException)
@@ -326,6 +337,21 @@ namespace ReadHtml.Handles
                 }
             }
             return null;
+        }
+
+        private Root GetHtmlHeadingOrParagraph(int index, IElement data)
+        {
+            Root root = new();
+
+            if (data.GetType().Name == Constants.HTML_HEADING_ELEMENT ||
+                data.GetType().Name == Constants.HTML_PARAGRAPH_ELEMENT)
+            {
+                root.Type = data.LocalName;
+                root.Index = index;
+                root.Value = data.InnerHtml;
+            }
+
+            return root;
         }
     }
 }
