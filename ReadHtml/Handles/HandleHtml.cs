@@ -238,20 +238,34 @@ namespace ReadHtml.Handles
                         listRoot.Add(await GetRoot(count, items));
                         count++;
                     }
-                    // Check the type of tag div, attribute type null and class list length is 0
+                    // Check the type of tag div, attribute type null
                     else if (items.GetType().Name == Constants.HTML_DIV_ELEMENT &&
-                        items.GetAttribute(Constants.TYPE) == null &&
-                        items.ClassList.Length == 0)
+                        items.GetAttribute(Constants.TYPE) == null)
                     {
                         foreach (var item in items.Children)
                         {
-                            listRoot.Add(GetHtmlHeadingOrParagraph(count, item));
-                            count++;
+                            if(item.LocalName == Constants.TAG_DIV)
+                            {
+                                listRoot.Add(await GetRoot(count, item));
+                                count++;
+                            }
+                            else
+                            {
+                                listRoot.Add(GetHtmlHeadingOrParagraph(count, item));
+                                count++;
+                            }
                         }
                     }
                     // Get html has tag heading or paragraph
                     else
                     {
+                        var text = items.TextContent.Trim().Replace(Environment.NewLine, string.Empty);
+
+                        if (string.IsNullOrEmpty(text))
+                        {
+                            continue;
+                        }
+
                         listRoot.Add(GetHtmlHeadingOrParagraph(count, items));
                         count++;
                     }
